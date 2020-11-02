@@ -20,15 +20,13 @@ public class Consumer extends Thread{
     @Override
     public void run() {
         Random rand = new Random();
-        for(int j=0;j<2;j++) {
-            for (int i = 0; i < M / numOfConsumers; i++) {
-                //int numOfPortions = rand.nextInt(maxBound)+1;
-                int numOfPortions = M - (number * M / numOfConsumers) - i;
+            while(true) {
+                int numOfPortions = rand.nextInt(maxBound)+1;
+                //int numOfPortions = M - (number * M / numOfConsumers) - i;
                 doStuff();
                 //System.out.println("Consumer "+number+" want to get " + numOfPortions + " portions from buffer");
                 buffer.get(numOfPortions);
                 //System.out.println("Consumer "+number+" got " + numOfPortions + " portions from buffer");
-            }
         }
     }
 

@@ -75,9 +75,9 @@ public class Main {
             }catch (InterruptedException e){e.printStackTrace();}
         }
 
-        DefaultCategoryDataset datasetGet = new DefaultCategoryDataset();
+       /* DefaultCategoryDataset datasetGet = new DefaultCategoryDataset();
         for(int i=0;i<M;i++){
-            datasetGet.setValue( regularBuffer.timesAvgGet[i], "Czas w nanosekundach", "P:"+(i+1));
+            datasetGet.setValue( regularBuffer.timeGet.getTimeAtIndex(i), "Czas w nanosekundach", "P:"+(i+1));
         }
 
         JFreeChart charGet = ChartFactory.createBarChart("Czas uzyskania porcji o danym rozmiarze w nanosekundach",
@@ -87,13 +87,13 @@ public class Main {
 
         DefaultCategoryDataset datasetPut = new DefaultCategoryDataset();
         for(int i=0;i<M;i++){
-            datasetPut.setValue( regularBuffer.timesAvgPut[i], "Czas w nanosekundach", "P:"+(i+1));
+            datasetPut.setValue( regularBuffer.timePut.getTimeAtIndex(i), "Czas w nanosekundach", "P:"+(i+1));
         }
 
         JFreeChart charPut = ChartFactory.createBarChart("Czas włożenia porcji o danym rozmiarze w nanosekundach",
                 "Rozmiar porcji", "Czas w nanosekundach", datasetPut, PlotOrientation.VERTICAL,
                 false, true, false);
-        ChartUtilities.saveChartAsPNG(new File("put10000Regular.png"),charPut,1920,1080);
+        ChartUtilities.saveChartAsPNG(new File("put10000Regular.png"),charPut,1920,1080);*/
     }
 
     public static void task3() throws IOException {
@@ -124,9 +124,9 @@ public class Main {
             }catch (InterruptedException e){e.printStackTrace();}
         }
 
-        DefaultCategoryDataset datasetGet = new DefaultCategoryDataset();
+        /*DefaultCategoryDataset datasetGet = new DefaultCategoryDataset();
         for(int i=0;i<M;i++){
-            datasetGet.setValue( buffer.timesAvgGet[i], "Czas w nanosekundach", "P:"+(i+1));
+            datasetGet.setValue( buffer.timeGet.getTimeAtIndex(i), "Czas w nanosekundach", "P:"+(i+1));
         }
 
         JFreeChart charGet = ChartFactory.createBarChart("Czas uzyskania porcji o danym rozmiarze w nanosekundach",
@@ -136,12 +136,12 @@ public class Main {
 
         DefaultCategoryDataset datasetPut = new DefaultCategoryDataset();
         for(int i=0;i<M;i++){
-            datasetPut.setValue( buffer.timesAvgPut[i], "Czas w nanosekundach", "P:"+(i+1));
+            datasetPut.setValue( buffer.timePut.getTimeAtIndex(i), "Czas w nanosekundach", "P:"+(i+1));
         }
 
         JFreeChart charPut = ChartFactory.createBarChart("Czas włożenia porcji o danym rozmiarze w nanosekundach",
                 "Rozmiar porcji", "Czas w nanosekundach", datasetPut, PlotOrientation.VERTICAL,
                 false, true, false);
-        ChartUtilities.saveChartAsPNG(new File("put10000Improved.png"),charPut,1920,1080);
+        ChartUtilities.saveChartAsPNG(new File("put10000Improved.png"),charPut,1920,1080);*/
     }
 }

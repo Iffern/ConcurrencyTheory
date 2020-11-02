@@ -1,8 +1,6 @@
 package task2;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -19,27 +17,19 @@ public class RegularBuffer implements Buffer{
     private final int bufferLength;
     //attributes to measure time
     private Lock timeLock = new ReentrantLock();
-    public Double[] timesAvgGet;
-    private Integer[] numOfSurveysGet;
-    public Double[] timesAvgPut;
-    private Integer[] numOfSurveysPut;
+    public TimeMeasure timeGet;
+    public TimeMeasure timePut;
 
     public RegularBuffer(int M){
         this.buffer = new Integer[M];
         this.bufferLength = M;
         Arrays.fill(buffer,0);
-        timesAvgGet = new Double[M/2];
-        numOfSurveysGet = new Integer[M/2];
-        timesAvgPut = new Double[M/2];
-        numOfSurveysPut = new Integer[M/2];
-        Arrays.fill(timesAvgGet, 0.0);
-        Arrays.fill(numOfSurveysGet,0);
-        Arrays.fill(timesAvgPut, 0.0);
-        Arrays.fill(numOfSurveysPut,0);
+        this.timeGet = new TimeMeasure(M/2);
+        this.timePut = new TimeMeasure(M/2);
     }
 
     public void put(int numOfPortions){
-        Long startTime = System.nanoTime();
+        /*Long startTime = System.nanoTime();*/
         lock.lock();
         while((bufferLength-sumOfPortions)<numOfPortions){
             try{
@@ -54,15 +44,15 @@ public class RegularBuffer implements Buffer{
         sumOfPortions += numOfPortions;
         consumerCond.signalAll();
         lock.unlock();
-        Long endTime = System.nanoTime();
+        /*Long endTime = System.nanoTime();
         timeLock.lock();
-        numOfSurveysPut[numOfPortions-1]+=1;
-        countNewAvgTime(numOfPortions,endTime-startTime, false);
-        timeLock.unlock();
+        timePut.modifyNumberOfSurveys(numOfPortions-1,1);
+        timePut.countNewAvgTime(numOfPortions,endTime-startTime);
+        timeLock.unlock();*/
     }
 
     public void get(int numOfPortions){
-        Long startTime = System.nanoTime();
+        /*Long startTime = System.nanoTime();*/
         lock.lock();
         while(sumOfPortions<numOfPortions){
             try{
@@ -77,11 +67,11 @@ public class RegularBuffer implements Buffer{
         sumOfPortions -= numOfPortions;
         producerCond.signalAll();
         lock.unlock();
-        Long endTime = System.nanoTime();
+        /*Long endTime = System.nanoTime();
         timeLock.lock();
-        numOfSurveysGet[numOfPortions-1]+=1;
-        countNewAvgTime(numOfPortions,endTime-startTime, true);
-        timeLock.unlock();
+        timeGet.modifyNumberOfSurveys(numOfPortions-1,-1);
+        timeGet.countNewAvgTime(numOfPortions,endTime-startTime);
+        timeLock.unlock();*/
     }
 
     private void printBuffer(){
@@ -89,24 +79,5 @@ public class RegularBuffer implements Buffer{
             System.out.print(buffer[i]+"|");
         }
         System.out.println();
-    }
-
-    private void countNewAvgTime(int numOfPortion, long time, boolean isItGet){
-        if(isItGet){
-            double lastAvg = timesAvgGet[numOfPortion-1];
-            if(numOfSurveysGet[numOfPortion-1]==1) timesAvgGet[numOfPortion-1] = (double) time;
-            else{
-                timesAvgGet[numOfPortion-1] =
-                        ((numOfSurveysGet[numOfPortion-1]-1)*lastAvg + time)/numOfSurveysGet[numOfPortion-1];
-            }
-        }
-        else{
-            double lastAvg = timesAvgPut[numOfPortion-1];
-            if(numOfSurveysPut[numOfPortion-1]==1) timesAvgPut[numOfPortion-1] = (double) time;
-            else{
-                timesAvgPut[numOfPortion-1] =
-                        ((numOfSurveysPut[numOfPortion-1]-1)*lastAvg + time)/numOfSurveysPut[numOfPortion-1];
-            }
-        }
     }
 }
