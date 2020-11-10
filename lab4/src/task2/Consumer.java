@@ -24,9 +24,9 @@ public class Consumer extends Thread{
                 int numOfPortions = rand.nextInt(maxBound)+1;
                 //int numOfPortions = M - (number * M / numOfConsumers) - i;
                 doStuff();
-                //System.out.println("Consumer "+number+" want to get " + numOfPortions + " portions from buffer");
+                System.out.println("Consumer "+number+" want to get " + numOfPortions + " portions from buffer");
                 buffer.get(numOfPortions);
-                //System.out.println("Consumer "+number+" got " + numOfPortions + " portions from buffer");
+                System.out.println("Consumer "+number+" got " + numOfPortions + " portions from buffer");
         }
     }
 

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        task3();
+        task1();
     }
 
     public static void task1(){
@@ -48,9 +48,9 @@ public class Main {
     }
 
     public static void task2() throws IOException {
-        int M=10000;
-        int C=100;
-        int P=100;
+        int M=20;
+        int C=4;
+        int P=4;
         RegularBuffer regularBuffer = new RegularBuffer(2*M);
 
         ArrayList<Thread> threads = new ArrayList<>();
@@ -97,9 +97,9 @@ public class Main {
     }
 
     public static void task3() throws IOException {
-        int M=10000;
-        int C=100;
-        int P=100;
+        int M=20;
+        int C=4;
+        int P=4;
         ImprovedBuffer buffer = new ImprovedBuffer(2*M);
 
         ArrayList<Thread> threads = new ArrayList<>();

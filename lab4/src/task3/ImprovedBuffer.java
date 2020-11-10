@@ -51,7 +51,7 @@ public class ImprovedBuffer implements Buffer {
         for(int i=0;i<numOfPortions;i++){
             buffer[(prod_idx+i)%bufferLength] = 1;
         }
-        //printBuffer();
+        printBuffer();
         prod_idx=(prod_idx+numOfPortions)%bufferLength;
         sumOfPortions += numOfPortions;
         isFirstProducerWaiting = false;
@@ -82,7 +82,7 @@ public class ImprovedBuffer implements Buffer {
         for(int i=0;i<numOfPortions;i++){
             buffer[(cons_idx+i)%bufferLength] = 0;
         }
-        //printBuffer();
+        printBuffer();
         cons_idx=(cons_idx+numOfPortions)%bufferLength;
         sumOfPortions -= numOfPortions;
         isFirstConsumerWaiting = false;

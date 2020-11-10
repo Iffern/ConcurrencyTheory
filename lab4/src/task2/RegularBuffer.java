@@ -39,7 +39,7 @@ public class RegularBuffer implements Buffer{
         for(int i=0;i<numOfPortions;i++){
             buffer[(prod_idx+i)%bufferLength] = 1;
         }
-        //printBuffer();
+        printBuffer();
         prod_idx=(prod_idx+numOfPortions)%bufferLength;
         sumOfPortions += numOfPortions;
         consumerCond.signalAll();
@@ -56,13 +56,13 @@ public class RegularBuffer implements Buffer{
         lock.lock();
         while(sumOfPortions<numOfPortions){
             try{
-                consumerCond.await(15, TimeUnit.SECONDS);
+                consumerCond.await();
             }catch (InterruptedException e){e.printStackTrace();}
         }
         for(int i=0;i<numOfPortions;i++){
             buffer[(cons_idx+i)%bufferLength] = 0;
         }
-        //printBuffer();
+        printBuffer();
         cons_idx=(cons_idx+numOfPortions)%bufferLength;
         sumOfPortions -= numOfPortions;
         producerCond.signalAll();

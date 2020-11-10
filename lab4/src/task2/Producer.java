@@ -24,9 +24,9 @@ public class Producer extends Thread{
                 int numOfPortions = rand.nextInt(maxBound)+1;
                 //int numOfPortions = (number * M / numOfProducers) + i + 1;
                 doStuff();
-                //System.out.println("Producer "+number+" want to put " + numOfPortions + " portions to buffer");
+                System.out.println("Producer "+number+" want to put " + numOfPortions + " portions to buffer");
                 buffer.put(numOfPortions);
-                //System.out.println("Producer "+number+" put " + numOfPortions + " portions to buffer");
+                System.out.println("Producer "+number+" put " + numOfPortions + " portions to buffer");
             }
         }
 
