@@ -1,17 +1,14 @@
-import tech.tablesaw.api.DoubleColumn;
-import tech.tablesaw.api.NumberColumn;
-import tech.tablesaw.api.Row;
-import tech.tablesaw.api.Table;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
         timeMeasurement();
+        /*Mandelbrot mandelbrot = new Mandelbrot(100000);
+        mandelbrot.paintMandelbrot(8,80);
+        mandelbrot.setVisible(true);*/
     }
 
     public static void timeMeasurement() {
@@ -20,6 +17,7 @@ public class Main {
         int[] numOfIterations = {500, 1000, 10000};
 
         File summary = new File("summary.txt");
+        if(summary.delete()) System.out.println("File deleted");
         try {
             if(summary.createNewFile()) System.out.println("File created");
         }catch (IOException e){e.printStackTrace();}
@@ -29,9 +27,9 @@ public class Main {
             writer = new FileWriter("summary.txt");
 
             writer.write("Number of threads | Number of tasks | Number of iterations " +
-                    "| Average time | Standard derivation\n");
+                    "| Average time in ms | Standard derivation in ms\n");
             writer.write("--------------------------------------------------------------" +
-                    "---------------------------------\n");
+                    "---------------------------------------------\n");
         }catch(IOException e){e.printStackTrace();}
 
         for (int iteration : numOfIterations) {
@@ -42,6 +40,10 @@ public class Main {
                 }
                 int taskNum = Mandelbrot.HEIGHT*Mandelbrot.WIDTH;
                 writeToFile(writer, threadNumber, iteration, taskNum);
+                try {
+                    writer.write("--------------------------------------------------------------" +
+                            "---------------------------------------------\n");
+                }catch (IOException e){e.printStackTrace();}
             }
         }
 
@@ -51,6 +53,8 @@ public class Main {
     }
 
     private static void writeToFile(FileWriter writer, int threadNumber, int iteration, int taskNum) {
+        double nanoToMili = 1./1000000;
+
         ArrayList<Long> times = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Mandelbrot mandelbrot = new Mandelbrot(iteration);
@@ -59,22 +63,22 @@ public class Main {
             long endTime = System.nanoTime();
             times.add(endTime-startTime);
         }
-        System.out.printf("%18d|%17d|%22d|%20d|%20f\n", threadNumber, taskNum, iteration,
-                calculateAvg(times), calculateSD(times));
+        System.out.printf("%18d|%17d|%22d|%20.2f|%26.2f\n", threadNumber, taskNum, iteration,
+                calculateAvg(times)*nanoToMili, calculateSD(times)*nanoToMili);
         try {
-            writer.write(String.format("%18d|%17d|%22d|%14d|%20.2f\n", threadNumber, taskNum, iteration,
-                    calculateAvg(times), calculateSD(times)));
+            writer.write(String.format("%18d|%17d|%22d|%20.2f|%26.2f\n", threadNumber, taskNum, iteration,
+                    calculateAvg(times)*nanoToMili, calculateSD(times)*nanoToMili));
         }catch (IOException e){e.printStackTrace();}
     }
 
 
-    private static long calculateAvg(ArrayList<Long> times){
+    private static double calculateAvg(ArrayList<Long> times){
         long sum = 0;
         for(long time:times){
             sum += time;
         }
 
-        return sum/times.size();
+        return (double) sum/(times.size());
     }
 
     private static double calculateSD(ArrayList<Long> times){
