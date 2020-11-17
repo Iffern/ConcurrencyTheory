@@ -5,10 +5,9 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        timeMeasurement();
-        /*Mandelbrot mandelbrot = new Mandelbrot(100000);
-        mandelbrot.paintMandelbrot(8,80);
-        mandelbrot.setVisible(true);*/
+        Mandelbrot mandelbrot = new Mandelbrot(500);
+        mandelbrot.paintMandelbrot(8,8);
+        mandelbrot.setVisible(true);
     }
 
     public static void timeMeasurement() {
@@ -40,11 +39,11 @@ public class Main {
                 }
                 int taskNum = Mandelbrot.HEIGHT*Mandelbrot.WIDTH;
                 writeToFile(writer, threadNumber, iteration, taskNum);
-                try {
-                    writer.write("--------------------------------------------------------------" +
-                            "---------------------------------------------\n");
-                }catch (IOException e){e.printStackTrace();}
             }
+            try {
+                writer.write("--------------------------------------------------------------" +
+                        "---------------------------------------------\n");
+            }catch (IOException e){e.printStackTrace();}
         }
 
         try {

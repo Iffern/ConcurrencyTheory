@@ -1,14 +1,13 @@
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
-public class MandelbrotThread implements Callable<Integer> {
+public class MandelbrotTask implements Callable<Integer> {
     private final BufferedImage I;
     private final ArrayList<Pixel> pixels;
     private int maxIter;
 
-    public MandelbrotThread(BufferedImage I, ArrayList<Pixel> pixels, int numOfIter){
+    public MandelbrotTask(BufferedImage I, ArrayList<Pixel> pixels, int numOfIter){
         this.I=I;
         this.pixels = pixels;
         this.maxIter = numOfIter;

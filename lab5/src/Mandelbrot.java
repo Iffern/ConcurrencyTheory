@@ -48,7 +48,7 @@ public class Mandelbrot extends JFrame {
             for(int x=0;x<WIDTH;x++) {
                 ArrayList<Pixel> pixel = new ArrayList<>();
                 pixel.add(new Pixel(x,y));
-                MandelbrotThread thread = new MandelbrotThread(I, pixel, maxIter);
+                MandelbrotTask thread = new MandelbrotTask(I, pixel, maxIter);
                 Future<Integer> future = pool.submit(thread);
                 set.add(future);
             }
@@ -76,7 +76,7 @@ public class Mandelbrot extends JFrame {
                         pixelsForCurrentTaskLeft+=leftovers;
                     }
 
-                    MandelbrotThread thread = new MandelbrotThread(I, pixels, maxIter);
+                    MandelbrotTask thread = new MandelbrotTask(I, pixels, maxIter);
                     Future<Integer> future = pool.submit(thread);
                     set.add(future);
 
