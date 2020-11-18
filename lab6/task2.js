@@ -14,8 +14,17 @@ function printAsync(s, cb) {
 
 
 function inparallel(parallel_functions, final_function) {
-
-
+    var counter = parallel_functions.length;
+    function parallel () {
+        counter--;
+        if(counter === 0){
+            final_function();
+        }
+    }
+    var i;
+    for(i=0;i<parallel_functions.length;i++){
+        parallel_functions[i](parallel);
+    }
 }
 
 A=function(cb){printAsync("A",cb);}
